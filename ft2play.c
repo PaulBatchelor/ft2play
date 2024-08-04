@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "../../pmplay.h"
+#include "pmplay.h"
 #include "posix.h"
 
 // defaults when not overriden by argument switches
