@@ -6,7 +6,7 @@
 #include "pmplay.h"
 #include "posix.h"
 
-// defaults when not overriden by argument switches
+/* defaults when not overriden by argument switches */
 #define DEFAULT_MIX_FREQ 44100
 #define DEFAULT_MIX_BUFSIZE 1024
 #define DEFAULT_MIX_AMP 10
@@ -14,7 +14,7 @@
 #define DEFAULT_INTRP_FLAG true
 #define DEFAULT_VRAMP_FLAG true
 
-// default settings
+/* default settings */
 static bool interpolation = DEFAULT_INTRP_FLAG;
 static bool volumeRamping = DEFAULT_VRAMP_FLAG;
 static int32_t mixingAmp = DEFAULT_MIX_AMP;
@@ -22,13 +22,10 @@ static int32_t masterVolume = DEFAULT_MASTERVOL;
 static int32_t mixingFrequency = DEFAULT_MIX_FREQ;
 static int32_t mixingBufferSize = DEFAULT_MIX_BUFSIZE;
 
-static int renderWav(const char *wav);
-
 int main(int argc, char *argv[])
 {
     const char *xmFileName;
     const char *wavFileName;
-    int rc;
 
     if (argc < 2) {
         fprintf(stderr, "Usage: %s in.xm out.wav\n", argv[0]);
@@ -44,15 +41,13 @@ int main(int argc, char *argv[])
 		return 1;
 	}
 
-	// you only need to make a call to these if amp != 4 and/or mastervol != 256, which are the FT2 defaults
+	/* you only need to make a call to these if
+     * amp != 4 and/or mastervol != 256, which are the
+     * FT2 defaults */
 	if (mixingAmp != 4) setAmp(mixingAmp);
 	if (masterVolume != 256) setMasterVol(masterVolume);
 
     WAVDump_Record(wavFileName);
-
-    if (rc) {
-        fprintf(stderr, "Couldn't render WAV\n");
-    }
 
 	freeMusic();
     return 0;

@@ -1,6 +1,7 @@
+CFLAGS=-Wall -pedantic #--std=c89
+
 OBJ=\
 	ft2play.o \
-	posix.o \
 	pmp_main.o \
 	tables.o \
 	snd_masm.o \
@@ -11,7 +12,7 @@ OBJ=\
 default: ft2play
 
 %.o: %.c
-	$(CC) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 ft2play: $(OBJ)
 	$(CC) $(OBJ) -o $@

@@ -3,16 +3,16 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-// AUDIO DRIVERS
+/* AUDIO DRIVERS */
 #if defined AUDIODRIVER_SDL
 #include "audiodrivers/sdl/sdldriver.h"
 #elif defined AUDIODRIVER_WINMM
 #include "audiodrivers/winmm/winmm.h"
 #else
-// Read "audiodrivers/how_to_write_drivers.txt"
+/* Read "audiodrivers/how_to_write_drivers.txt" */
 #endif
 
-enum // voice flags
+enum /* voice flags */
 {
 	IS_Vol = 1,
 	IS_Period = 2,
@@ -21,17 +21,17 @@ enum // voice flags
 	IS_QuickVol = 16
 };
 
-enum // note
+enum /* note */
 {
 	NOTE_KEYOFF = 97
 };
 
-enum // header flags
+enum /* header flags */
 {
 	LINEAR_FREQUENCIES = 1
 };
 
-enum // sample flags
+enum /* sample flags */
 {
 	LOOP_OFF = 0,
 	LOOP_FORWARD = 1,
@@ -39,7 +39,7 @@ enum // sample flags
 	SAMPLE_16BIT = 16
 };
 
-enum // envelope flags
+enum /* envelope flags */
 {
 	ENV_ENABLED = 1,
 	ENV_SUSTAIN = 2,
@@ -54,7 +54,7 @@ typedef struct songTyp_t
 	int16_t songPos, pattNr, pattPos, pattLen;
 	uint16_t len, repS, speed, tempo, globVol, timer, ver;
 
-	uint16_t antInstrs; // 8bb: added this
+	uint16_t antInstrs; /* 8bb: added this */
 } songTyp;
 
 typedef struct sampleTyp_t
@@ -109,7 +109,7 @@ typedef struct stmTyp_t
 #pragma pack(push)
 #pragma pack(1)
 #endif
-typedef struct tonTyp_t // this one must be packed on some systems
+typedef struct tonTyp_t /* this one must be packed on some systems */
 {
 	uint8_t ton, instr, vol, effTyp, eff;
 }
@@ -121,7 +121,7 @@ tonTyp;
 #pragma pack(pop)
 #endif
 
-// globalized
+/* globalized */
 extern volatile bool interpolationFlag, volumeRampingFlag, moduleLoaded, musicPaused, WAVDump_Flag;
 extern bool linearFrqTab;
 extern volatile const uint16_t *note2Period;
@@ -139,16 +139,16 @@ extern stmTyp stm[32];
 #define CLAMP(x, low, high) (((x) > (high)) ? (high) : (((x) < (low)) ? (low) : (x)))
 
 bool initMusic(int32_t audioFrequency, int32_t audioBufferSize, bool interpolation, bool volumeRamping);
-bool loadMusicFromData(const uint8_t *data, uint32_t dataLength); // .XM/.MOD/.FT
-bool loadMusic(const char *filename); // .XM/.MOD/.FT
+bool loadMusicFromData(const uint8_t *data, uint32_t dataLength); /* .XM/.MOD/.FT */
+bool loadMusic(const char *filename); /* .XM/.MOD/.FT */
 void freeMusic(void);
 bool startMusic(void);
 void stopMusic();
 void pauseMusic(void);
 void resumeMusic(void);
-void setMasterVol(int32_t v); // 0..256
-void setAmp(int32_t level); // 1..32
-void setPos(int32_t pos, int32_t row); // input of -1 = don't change
+void setMasterVol(int32_t v); /* 0..256 */
+void setAmp(int32_t level); /* 1..32 */
+void setPos(int32_t pos, int32_t row); /* input of -1 = don't change */
 void stopVoices(void);
 void updateReplayRate(void);
 void startPlaying(void);
@@ -156,7 +156,7 @@ void stopPlaying(void);
 
 bool WAVDump_Record(const char *filenameOut);
 
-// 8bb: added these three, handy
+/* 8bb: added these three, handy */
 void WAVDump_Abort(void);
 int32_t getMasterVol(void);
 int32_t getAmp(void);
