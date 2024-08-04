@@ -103,62 +103,7 @@ int main(int argc, char *argv[])
 	if (renderToWavFlag)
 		return renderToWav();
 
-	if (!startMusic())
-	{
-		printf("Error: Couldn't start the audio system!\n");
-		freeMusic();
-		return 1;
-	}
-
-	startPlaying();
-
-	printf("Playing, press ESC to stop...\n");
-	printf("\n");
-	printf("Controls:\n");
-	printf("Esc=Quit   Space=Toggle Pause   Plus = inc. song pos   Minus = dec. song pos\n");
-	printf("\n");
-	printf("Mixing frequency: %dHz\n", realReplayRate);
-	printf("Linear interpolation: %s\n", interpolation ? "On" : "Off");
-	printf("Volume ramping: %s\n", volumeRamping ? "On" : "Off");
-	printf("Mixing amp: %d\n", boostLevel);
-	printf("Mixing volume: %d\n", masterVol);
-	printf("\n");
-	printf("Name: %s\n", song.name);
-	printf("Channels: %d\n", song.antChn);
-	printf("Instruments: %d\n", song.antInstrs);
-	printf("Song length: %d (restart pos: %d)\n", song.len, song.repS);
-	printf("\n");
-
-	printf("- STATUS -\n");
-
-#ifndef _WIN32
-	modifyTerminal();
-#endif
-
-	programRunning = true;
-	while (programRunning)
-	{
-		readKeyboard();
-
-		printf(" Pos: %03d/%03d - Pattern: %03d - Row: %03d/%03d - Active voices: %02d/%02d %s\r",
-			song.songPos, song.len, song.pattNr, song.pattPos, song.pattLen,
-			getNumActiveVoices(), song.antChn, musicPaused ? "(PAUSED)" : "        ");
-		fflush(stdout);
-
-		Sleep(100);
-	}
-
-#ifndef _WIN32
-	revertTerminal();
-#endif
-
-	printf("\n");
-
-	stopMusic();
-	freeMusic();
-
-	printf("Playback stopped.\n");
-	return 0;
+    return 0;
 }
 
 static void showUsage(void)
