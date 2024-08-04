@@ -235,7 +235,9 @@ static int32_t renderToWav(void)
 	** Though, some songs will render forever (if they Bxx-jump to a previous order),
 	** thus having this in a thread is recommended so that you can force-abort it, if stuck.
 	*/
-	WAVDump_Flag = true;
+
+#if 0    
+    WAVDump_Flag = true;
 	if (!createSingleThread(wavRecordingThread))
 	{
 		printf("Error: Couldn't create WAV rendering thread!\n");
@@ -243,6 +245,7 @@ static int32_t renderToWav(void)
 		freeMusic();
 		return 1;
 	}
+
 
 	printf("Rendering to WAV. If stuck forever, press any key to stop rendering...\n");
 
@@ -260,6 +263,10 @@ static int32_t renderToWav(void)
 #endif
 
 	closeSingleThread();
+#endif
+
+    printf("calling wavdump directly\n");
+    WAVDump_Record(WAVRenderFilename);
 
 	free(WAVRenderFilename);
 	freeMusic();

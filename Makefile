@@ -6,8 +6,10 @@ OBJ=\
 	snd_masm.o \
 	pmplay.o \
 	pmp_mix.o \
-	audiodrivers/sdl/sdldriver.o
-#audiodrivers/winmm/winmm.c
+	audiodrivers/dummy/dummydriver.o
 
 build/ft2play: $(OBJ)
-	$(CC) $(OBJ) -o $@ -lSDL2
+	$(CC) $(OBJ) -o $@
+
+clean:
+	$(RM) $(OBJ) build/ft2play
