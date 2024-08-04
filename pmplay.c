@@ -16,6 +16,8 @@
 #include "pmp_mix.h"
 #include "snd_masm.h"
 #include "tables.h"
+#include "driver.h"
+
 
 #define INSTR_HEADER_SIZE 263
 

@@ -8,6 +8,11 @@ OBJ=\
 	pmp_mix.o \
 	audiodrivers/dummy/dummydriver.o
 
+default: ft2play
+
+%.o: %.c
+	$(CC) -c $< -o $@
+
 ft2play: $(OBJ)
 	$(CC) $(OBJ) -o $@
 
