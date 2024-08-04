@@ -40,6 +40,7 @@ static void showUsage(void);
 static void handleArguments(int argc, char *argv[]);
 static void readKeyboard(void);
 static int32_t renderToWav(void);
+static int renderWav(const char *wav);
 
 // yuck!
 #ifdef _WIN32
@@ -64,7 +65,7 @@ static void sigtermFunc(int32_t signum)
 }
 #endif
 
-int main(int argc, char *argv[])
+int old_main(int argc, char *argv[])
 {
 	if (argc < 2 || (argc == 2 && (!strcmp(argv[1], "/?") || !strcmp(argv[1], "-h"))))
 	{
@@ -103,6 +104,40 @@ int main(int argc, char *argv[])
 	if (renderToWavFlag)
 		return renderToWav();
 
+    return 0;
+}
+
+int main(int argc, char *argv[])
+{
+    const char *xmFileName;
+    const char *wavFileName;
+    int rc;
+
+    if (argc < 2) {
+        fprintf(stderr, "Usage: %s in.xm out.wav\n", argv[0]);
+        return 1;
+    }
+
+    xmFileName = argv[1];
+    wavFileName = argv[2];
+    initMusic(mixingFrequency, mixingBufferSize, interpolation, volumeRamping);
+
+	if (!loadMusic(xmFileName)) {
+		fprintf(stderr, "Error: Couldn't load song!\n");
+		return 1;
+	}
+
+	// you only need to make a call to these if amp != 4 and/or mastervol != 256, which are the FT2 defaults
+	if (mixingAmp != 4) setAmp(mixingAmp);
+	if (masterVolume != 256) setMasterVol(masterVolume);
+
+    rc = renderWav(wavFileName);
+
+    if (rc) {
+        fprintf(stderr, "Couldn't render WAV\n");
+    }
+
+	freeMusic();
     return 0;
 }
 
@@ -209,6 +244,12 @@ static void readKeyboard(void)
 			default: break;
 		}
 	}
+}
+
+static int renderWav(const char *wavFileName)
+{
+    WAVDump_Record(wavFileName);
+    return 0;
 }
 
 static int32_t renderToWav(void)

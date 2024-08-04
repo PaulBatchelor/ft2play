@@ -1,2 +1,3 @@
-./ft2play tempest-acidjazz.xm --render-to-wav
-diff tempest-acidjazz.xm.wav ref.wav
+rm -f tempest-acidjazz.xm.wav
+./ft2play tempest-acidjazz.xm tempest-acidjazz.xm.wav
+diff ref.wav tempest-acidjazz.xm.wav
